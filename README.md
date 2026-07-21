@@ -143,8 +143,6 @@ Hackaton-2026/
 │   │   └── unirse.html            # Vista para unirse a la práctica
 │   └── app.ts
 ├── .gitignore
-├── eREADME.md
-├── juego.html                     # Actividad de práctica
 ├── README.md
 └── requirements.txt
 ```
