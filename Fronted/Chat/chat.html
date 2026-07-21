@@ -1,135 +1,195 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>TutorIA Rural - Chat Estudiante</title>
-<style>
-  body {
-    font-family: -apple-system, Arial, sans-serif;
-    max-width: 600px;
-    margin: 30px auto;
-    background: #f5f5f5;
-    padding: 20px;
-  }
-  h1 { color: #2d5f3f; }
-  #chat {
-    background: white;
-    border-radius: 10px;
-    padding: 15px;
-    min-height: 300px;
-    max-height: 450px;
-    overflow-y: auto;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  }
-  .msg { margin-bottom: 12px; padding: 8px 12px; border-radius: 8px; }
-  .agente { background: #e8f4ea; }
-  .estudiante { background: #e8f0f4; text-align: right; }
-  .semaforo { font-size: 22px; margin-left: 6px; }
-  .controls { margin-top: 15px; display: flex; gap: 8px; }
-  input, button, select {
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-  }
-  input { flex: 1; }
-  button {
-    background: #2d5f3f;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  button:hover { background: #244d33; }
-  #estado { font-size: 13px; color: #666; margin-top: 8px; }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#12372a">
+  <meta name="description" content="ManabIA, tutor educativo con inteligencia artificial y supervisión docente para estudiantes de Manabí.">
+  <title>ManabIA | Tutor educativo</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script src="/assets/chat.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#tutoria">Saltar al tutor</a>
 
-<h1>🎓 TutorIA Rural</h1>
-<p>Elige un tema para empezar a aprender:</p>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="ManabIA, inicio">
+      <span class="brand__mark" aria-hidden="true">M</span>
+      <span>
+        <strong>ManabIA</strong>
+        <small>Aprender cerca, llegar más lejos</small>
+      </span>
+    </a>
 
-<select id="tema">
-  <option value="fracciones">Fracciones</option>
-  <option value="fotosintesis">Fotosíntesis</option>
-  <option value="verbos">Verbos en pasado</option>
-</select>
-<button onclick="pedirExplicacion()">Empezar tema</button>
+    <nav class="topbar__nav" aria-label="Navegación principal">
+      <a class="nav-link is-active" href="/">Tutor</a>
+      <a class="nav-link" href="/panel">Panel docente</a>
+    </nav>
 
-<div id="chat"></div>
+    <div id="connectionBadge" class="connection-badge" role="status" aria-live="polite">
+      <span class="connection-badge__dot" aria-hidden="true"></span>
+      <span>Comprobando conexión…</span>
+    </div>
+  </header>
 
-<div class="controls">
-  <input id="respuesta" placeholder="Escribe tu respuesta aquí..." onkeypress="if(event.key==='Enter') enviarRespuesta()">
-  <button onclick="enviarRespuesta()">Enviar</button>
-</div>
+  <main class="page-shell">
+    <aside class="welcome-card" aria-labelledby="welcomeTitle">
+      <p class="eyebrow">Tutor educativo con IA</p>
+      <h1 id="welcomeTitle">Tu forma de aprender también cuenta.</h1>
+      <p class="welcome-card__lead">
+        Aprende cualquier tema con explicaciones claras, practica en equipo y recibe apoyo docente cuando lo necesites.
+      </p>
 
-<div id="estado"></div>
+      <div class="feature-list" aria-label="Beneficios de ManabIA">
+        <div class="feature">
+          <span class="feature__icon" aria-hidden="true">01</span>
+          <div>
+            <strong>Explicaciones a tu ritmo</strong>
+            <span>Con ejemplos cercanos y un texto de apoyo opcional.</span>
+          </div>
+        </div>
+        <div class="feature">
+          <span class="feature__icon" aria-hidden="true">02</span>
+          <div>
+            <strong>Decisiones comprensibles</strong>
+            <span>Cada evaluación muestra su semáforo y la razón.</span>
+          </div>
+        </div>
+        <div class="feature">
+          <span class="feature__icon" aria-hidden="true">03</span>
+          <div>
+            <strong>Docentes siempre presentes</strong>
+            <span>Tres señales rojas activan una revisión humana.</span>
+          </div>
+        </div>
+      </div>
 
-<script>
-const API = ""; // mismo origen (Flask sirve todo junto)
-let temaActual = "";
-let ultimaPregunta = "";
+      <div class="ods-note">
+        <span class="ods-note__number">4</span>
+        <p><strong>ODS 4 · Educación de calidad</strong><br>Una experiencia pensada para conexión mínima e intermitente.</p>
+      </div>
+    </aside>
 
-function agregarMensaje(texto, tipo, semaforo) {
-  const chat = document.getElementById("chat");
-  const div = document.createElement("div");
-  div.className = "msg " + tipo;
-  let extra = "";
-  if (semaforo) {
-    const emoji = semaforo === "rojo" ? "🔴" : semaforo === "amarillo" ? "🟡" : "🟢";
-    extra = `<span class="semaforo">${emoji}</span>`;
-  }
-  div.innerHTML = texto + extra;
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
-}
+    <section id="tutoria" class="tutor-card" aria-labelledby="tutorTitle">
+      <header class="tutor-card__header">
+        <div class="tutor-identity">
+          <span class="tutor-avatar" aria-hidden="true">IA</span>
+          <div>
+            <p class="eyebrow">Acompañamiento personalizado</p>
+            <h2 id="tutorTitle">Conversa con tu tutor</h2>
+          </div>
+        </div>
 
-async function pedirExplicacion() {
-  temaActual = document.getElementById("tema").value;
-  document.getElementById("chat").innerHTML = "";
-  agregarMensaje("⏳ Explicando...", "agente");
+        <ol class="learning-steps" aria-label="Etapas de aprendizaje">
+          <li id="stepLearn" class="is-active"><span>1</span> Aprende</li>
+          <li id="stepCheck"><span>2</span> Comprueba</li>
+          <li id="stepPractice"><span>3</span> Practica</li>
+        </ol>
+      </header>
 
-  const res = await fetch(API + "/api/explicar", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({tema: temaActual})
-  });
-  const data = await res.json();
+      <form id="topicForm" class="topic-form">
+        <div class="field field--compact">
+          <label for="studentName">¿Cómo te llamamos?</label>
+          <input id="studentName" name="studentName" type="text" maxlength="40" autocomplete="nickname" placeholder="Ej. Ana" required>
+        </div>
 
-  document.getElementById("chat").innerHTML = "";
-  agregarMensaje("🤖 " + data.explicacion, "agente");
-  ultimaPregunta = data.explicacion; // usamos la explicación como contexto de la pregunta
-}
+        <div class="field field--compact">
+          <label for="topicSelect">¿Qué quieres aprender?</label>
+          <select id="topicSelect" name="topicSelect">
+            <option value="fracciones">Fracciones</option>
+            <option value="fotosíntesis">Fotosíntesis</option>
+            <option value="verbos en pasado">Verbos en pasado</option>
+            <option value="otro">Otro tema…</option>
+          </select>
+        </div>
 
-async function enviarRespuesta() {
-  const input = document.getElementById("respuesta");
-  const respuesta = input.value.trim();
-  if (!respuesta || !temaActual) return;
+        <div id="customTopicField" class="field field--full" hidden>
+          <label for="customTopic">Escribe el tema</label>
+          <input id="customTopic" name="customTopic" type="text" maxlength="100" placeholder="Ej. El ciclo del agua">
+        </div>
 
-  agregarMensaje("🧑 " + respuesta, "estudiante");
-  input.value = "";
+        <details class="source-details field--full">
+          <summary>Agregar texto de mi clase <span>Opcional</span></summary>
+          <div class="field source-details__field">
+            <label for="sourceText">Pega un fragmento para basar la explicación en él</label>
+            <textarea id="sourceText" name="sourceText" rows="3" maxlength="3000" placeholder="Apuntes, lectura o instrucciones del docente…"></textarea>
+            <small>Máximo 3.000 caracteres. El texto solo se usa para esta explicación.</small>
+          </div>
+        </details>
 
-  document.getElementById("estado").innerText = "Evaluando...";
+        <button id="startButton" class="button button--primary field--full" type="submit">
+          <span>Empezar a aprender</span>
+          <span aria-hidden="true">→</span>
+        </button>
+      </form>
 
-  const res = await fetch(API + "/api/evaluar", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({
-      tema: temaActual,
-      pregunta: ultimaPregunta,
-      respuesta: respuesta,
-      estudiante: "Estudiante Demo"
-    })
-  });
-  const data = await res.json();
+      <div id="chat" class="chat" role="log" aria-live="polite" aria-relevant="additions">
+        <article class="message message--agent">
+          <span class="message__avatar" aria-hidden="true">M</span>
+          <div class="message__bubble">
+            <span class="message__author">ManabIA</span>
+            <p>¡Hola! Elige un tema y te lo explicaré paso a paso. Luego comprobaremos juntos qué entendiste.</p>
+          </div>
+        </article>
+      </div>
 
-  agregarMensaje(data.razon, "agente", data.semaforo);
-  document.getElementById("estado").innerText = "";
+      <div id="status" class="status" role="status" aria-live="polite"></div>
 
-  if (data.escalado) {
-    agregarMensaje("⚠️ Este caso fue escalado al panel del docente.", "agente");
-  }
-}
-</script>
+      <form id="responseForm" class="composer">
+        <label class="sr-only" for="studentAnswer">Tu respuesta</label>
+        <input id="studentAnswer" name="studentAnswer" type="text" maxlength="500" autocomplete="off" placeholder="Primero elige un tema…" disabled required>
+        <button id="sendButton" class="button button--send" type="submit" disabled aria-label="Enviar respuesta">
+          <span>Enviar</span><span aria-hidden="true">↑</span>
+        </button>
+      </form>
 
+      <section id="practicePanel" class="practice-panel" aria-labelledby="practiceTitle" hidden>
+        <header class="practice-panel__header">
+          <div>
+            <p class="eyebrow">Actividad integrada de refuerzo</p>
+            <h3 id="practiceTitle">Practica lo aprendido</h3>
+            <p>Respondan por turnos. La meta es explicarse y aprender en equipo.</p>
+          </div>
+          <button id="closePracticeButton" class="icon-button" type="button" aria-label="Cerrar actividad">×</button>
+        </header>
+
+        <div class="scoreboard" aria-label="Marcador de la actividad">
+          <div id="teamCard0" class="team-card is-current">
+            <span>Equipo Ceibo</span>
+            <strong id="score0">0</strong>
+          </div>
+          <div class="round-pill"><span id="roundLabel">Ronda 1 de 4</span></div>
+          <div id="teamCard1" class="team-card">
+            <span>Equipo Colibrí</span>
+            <strong id="score1">0</strong>
+          </div>
+        </div>
+
+        <div id="practiceContent" class="practice-content">
+          <p id="turnLabel" class="turn-label">Turno del Equipo Ceibo</p>
+          <div id="practiceLoading" class="practice-loading" hidden>
+            <span class="spinner" aria-hidden="true"></span>
+            <p>Preparando una pregunta para el equipo…</p>
+          </div>
+          <div id="practiceQuestionBlock" hidden>
+            <h4 id="practiceQuestion"></h4>
+            <div id="practiceOptions" class="practice-options"></div>
+            <div id="practiceFeedback" class="practice-feedback" role="status" aria-live="polite" hidden></div>
+            <button id="nextQuestionButton" class="button button--primary" type="button" hidden>Siguiente turno →</button>
+          </div>
+          <div id="practiceError" class="inline-error" role="alert" hidden>
+            <strong>No pudimos cargar la pregunta.</strong>
+            <span>Tu marcador se mantiene en esta página. Revisa la conexión y vuelve a intentar.</span>
+            <button id="retryPracticeButton" class="button button--secondary" type="button">Reintentar</button>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>ManabIA · Hecho en Manabí para aprender sin barreras</span>
+    <a href="/panel">Ir a supervisión docente</a>
+  </footer>
 </body>
 </html>

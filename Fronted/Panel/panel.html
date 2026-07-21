@@ -1,102 +1,99 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>TutorIA Rural - Panel Docente</title>
-<style>
-  body {
-    font-family: -apple-system, Arial, sans-serif;
-    max-width: 700px;
-    margin: 30px auto;
-    background: #f5f5f5;
-    padding: 20px;
-  }
-  h1 { color: #2d5f3f; }
-  .info {
-    background: #fff8e1;
-    border-left: 4px solid #f0c000;
-    padding: 10px 15px;
-    border-radius: 6px;
-    margin-bottom: 20px;
-    font-size: 14px;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  }
-  th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-  }
-  th { background: #2d5f3f; color: white; }
-  tr:hover { background: #f9f9f9; }
-  .vacio { text-align: center; padding: 30px; color: #888; }
-  button {
-    background: #2d5f3f;
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-bottom: 15px;
-  }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#12372a">
+  <meta name="description" content="Panel de supervisión docente de ManabIA.">
+  <title>ManabIA | Panel docente</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script src="/assets/panel.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#casos">Saltar a los casos</a>
 
-<h1>👩‍🏫 Panel del Docente</h1>
-<div class="info">
-  Aquí aparecen los estudiantes que necesitan ayuda directa del profesor —
-  el agente los escala automáticamente después de 3 respuestas seguidas en rojo 🔴.
-</div>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="ManabIA, inicio">
+      <span class="brand__mark" aria-hidden="true">M</span>
+      <span>
+        <strong>ManabIA</strong>
+        <small>Supervisión docente</small>
+      </span>
+    </a>
 
-<button onclick="cargarEscalados()">🔄 Actualizar</button>
+    <nav class="topbar__nav" aria-label="Navegación principal">
+      <a class="nav-link" href="/">Tutor</a>
+      <a class="nav-link is-active" href="/panel">Panel docente</a>
+    </nav>
 
-<table id="tabla">
-  <thead>
-    <tr>
-      <th>Estudiante</th>
-      <th>Tema</th>
-      <th>Motivo del escalado</th>
-    </tr>
-  </thead>
-  <tbody id="cuerpo-tabla"></tbody>
-</table>
+    <div id="connectionBadge" class="connection-badge" role="status" aria-live="polite">
+      <span class="connection-badge__dot" aria-hidden="true"></span>
+      <span>Comprobando conexión…</span>
+    </div>
+  </header>
 
-<script>
-async function cargarEscalados() {
-  const res = await fetch("/api/escalados");
-  const data = await res.json();
-  const cuerpo = document.getElementById("cuerpo-tabla");
-  cuerpo.innerHTML = "";
+  <main class="panel-shell">
+    <section class="panel-hero" aria-labelledby="panelTitle">
+      <div>
+        <p class="eyebrow">Humano al centro</p>
+        <h1 id="panelTitle">Casos que necesitan acompañamiento</h1>
+        <p>ManabIA identifica patrones; el docente conserva la decisión y el acompañamiento final.</p>
+      </div>
+      <div class="panel-stat" aria-label="Cantidad de casos pendientes">
+        <strong id="caseCount">—</strong>
+        <span>casos para revisar</span>
+      </div>
+    </section>
 
-  if (data.escalados.length === 0) {
-    cuerpo.innerHTML = `<tr><td colspan="3" class="vacio">
-      Sin casos escalados por ahora. Cuando un estudiante falle 3 veces
-      seguidas en un tema, aparecerá aquí.</td></tr>`;
-    return;
-  }
+    <section class="supervision-note" aria-label="Cómo funciona la supervisión humana">
+      <span class="supervision-note__icon" aria-hidden="true">!</span>
+      <div>
+        <strong>¿Cuándo se solicita apoyo?</strong>
+        <p>Después de tres evaluaciones rojas consecutivas del mismo estudiante en el mismo tema. La razón, la última respuesta y el número de intentos quedan visibles para orientar la intervención.</p>
+      </div>
+    </section>
 
-  data.escalados.forEach(caso => {
-    const fila = document.createElement("tr");
-    fila.innerHTML = `
-      <td>${caso.estudiante}</td>
-      <td>${caso.tema}</td>
-      <td>${caso.motivo}</td>
-    `;
-    cuerpo.appendChild(fila);
-  });
-}
+    <section id="casos" class="cases-card" aria-labelledby="casesTitle">
+      <header class="cases-card__header">
+        <div>
+          <p class="eyebrow">Seguimiento trazable</p>
+          <h2 id="casesTitle">Alertas de aprendizaje</h2>
+          <p id="lastUpdated">Todavía no se ha actualizado.</p>
+        </div>
+        <button id="refreshButton" class="button button--secondary" type="button">
+          <span aria-hidden="true">↻</span> Actualizar
+        </button>
+      </header>
 
-// Cargar al abrir, y actualizar cada 8 segundos automáticamente
-cargarEscalados();
-setInterval(cargarEscalados, 8000);
-</script>
+      <div id="panelStatus" class="status" role="status" aria-live="polite"></div>
 
+      <div class="table-wrap">
+        <table>
+          <caption class="sr-only">Estudiantes escalados para supervisión docente</caption>
+          <thead>
+            <tr>
+              <th scope="col">Estudiante</th>
+              <th scope="col">Tema</th>
+              <th scope="col">Motivo y evidencia</th>
+              <th scope="col">Intentos</th>
+              <th scope="col">Fecha</th>
+            </tr>
+          </thead>
+          <tbody id="casesBody"></tbody>
+        </table>
+      </div>
+
+      <div id="emptyState" class="empty-state" hidden>
+        <span class="empty-state__icon" aria-hidden="true">✓</span>
+        <h3>Sin casos pendientes</h3>
+        <p>Cuando un estudiante necesite ayuda directa, aparecerá aquí con el motivo del escalado.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>ManabIA · IA con supervisión humana</span>
+    <a href="/">Volver al tutor</a>
+  </footer>
 </body>
 </html>
