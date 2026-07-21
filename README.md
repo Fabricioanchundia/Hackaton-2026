@@ -1,231 +1,242 @@
-# ManabIA
+# Koska
+# KOSKA
 
-**Tutor educativo con inteligencia artificial y supervisión docente para el Buildathon Portoviejo, Tema 3 — ODS 4: Educación de calidad.**
+Koska es un tutor educativo con inteligencia artificial creado para el Buildathon Portoviejo. Ayuda a estudiantes a comprender contenidos escolares mediante explicaciones sencillas, evaluación de comprensión y práctica guiada; además, permite que el docente detecte oportunamente casos que requieren acompañamiento.
+**Tutor educativo con inteligencia artificial y supervisión docente para el Buildathon Portoviejo — Tema 3, ODS 4: Educación de calidad.**
 
-ManabIA combina la identidad de Manabí con el acompañamiento de la IA. Es un prototipo educativo pensado para estudiantes de Portoviejo y otras comunidades donde la conectividad puede ser limitada o intermitente.
+## ODS 4: Educación de calidad
+KOSKA es un prototipo educativo creado en Portoviejo para apoyar el aprendizaje mediante explicaciones claras, evaluación formativa y práctica guiada. La IA personaliza la experiencia de aprendizaje y ayuda a detectar dificultades; el docente conserva la decisión pedagógica final.
 
-ManabIA **no es un juego**. Su núcleo es una tutoría personalizada: explica un tema, comprueba la comprensión, justifica cada evaluación y deriva al docente los casos que necesitan acompañamiento. La práctica grupal con turnos y marcador es una actividad de refuerzo integrada al flujo del tutor.
+El proyecto se alinea con el **Objetivo de Desarrollo Sostenible 4**, que busca garantizar una educación inclusiva, equitativa y de calidad. Koska responde a las brechas de acompañamiento educativo que pueden afectar a estudiantes de zonas rurales de Manabí, ofreciendo una experiencia de aprendizaje personalizada y una herramienta de supervisión para docentes.
+> KOSKA no es un juego. La actividad grupal de práctica es un recurso de refuerzo integrado al flujo de tutoría.
 
-## Propuesta de valor
+## Problema
 
-- Explica temas de distintas materias con lenguaje claro y ejemplos cercanos.
-- Puede basar la explicación en un texto de clase pegado por el estudiante.
-- Entrega evaluación formativa mediante un semáforo rojo, amarillo o verde y una razón comprensible.
-- Conserva la trazabilidad de pregunta, respuesta, resultado, fecha e intento.
-- Ofrece una práctica grupal después de verificar la comprensión.
-- Escala automáticamente al panel docente tres respuestas rojas consecutivas del mismo estudiante en el mismo tema.
-- Funciona en modo simulado sin clave ni consumo de OpenAI y usa ese mismo modo como respaldo si el servicio externo falla.
-- Usa HTML, CSS y JavaScript sin frameworks, con Flask como único servidor.
+Las diferencias en acceso a recursos educativos y acompañamiento personalizado pueden profundizar las dificultades de aprendizaje. Cuando un estudiante no logra comprender un tema, el docente no siempre recibe una señal temprana y clara para intervenir.
+En contextos con acceso desigual a recursos educativos y acompañamiento personalizado, las dificultades de aprendizaje pueden pasar desapercibidas y acumularse. Esto puede afectar con mayor intensidad a estudiantes de zonas rurales y comunidades con infraestructura tecnológica desigual.
 
-## Relación con el ODS 4
+## Solución
+KOSKA busca ofrecer retroalimentación oportuna al estudiante y señales claras al docente para intervenir ante una dificultad repetida.
 
-El ODS 4 busca una educación inclusiva, equitativa y de calidad. ManabIA aporta a ese objetivo como una herramienta de apoyo: adapta la explicación al tema solicitado, ofrece retroalimentación inmediata, permite detectar dificultades repetidas y mantiene al docente como responsable del acompañamiento pedagógico.
+Koska integra un flujo de tutoría educativa:
+## ODS 4: Educación de calidad
 
-El prototipo toma la brecha de acceso y conectividad rural de Manabí como motivación general. No pretende reemplazar infraestructura, políticas educativas ni trabajo docente; demuestra una forma de reducir la dependencia de servicios externos durante una tutoría.
+KOSKA se alinea con el **Objetivo de Desarrollo Sostenible 4: garantizar una educación inclusiva, equitativa y de calidad**. Aporta a este objetivo mediante:
 
-## Flujo de aprendizaje
+- Explicación de temas escolares con IA en lenguaje simple.
+- Evaluación de respuestas mediante un semáforo de comprensión: rojo, amarillo o verde, con una razón justificada.
+- Escalamiento al panel docente cuando un estudiante obtiene tres alertas rojas consecutivas en el mismo tema.
+- Actividad grupal **“Practica lo aprendido”**, con turnos, puntaje y retroalimentación inmediata.
+- Pre-reportes individuales que el docente puede revisar y editar antes de definir la retroalimentación final.
+- Explicaciones adaptadas al tema que estudia cada estudiante.
+- Retroalimentación inmediata y comprensible sobre sus respuestas.
+- Identificación temprana de dificultades recurrentes.
+- Supervisión humana para que el docente revise y decida la intervención educativa.
 
-1. **Tutoría:** el estudiante indica su nombre, elige o escribe un tema y, opcionalmente, pega un texto de clase.
-2. **Explicación:** ManabIA devuelve una explicación breve y una pregunta de comprobación.
-3. **Evaluación trazable:** la respuesta recibe un semáforo y una razón. El `intento_id` permite reintentar una solicitud interrumpida sin contarla dos veces.
-4. **Práctica integrada:** después de un resultado verde aparece **“Practicar lo aprendido (grupal)”**. Dos equipos responden por turnos cuatro preguntas de refuerzo dentro de la misma pantalla.
-5. **Escalado:** tres resultados rojos consecutivos para la misma combinación estudiante–tema crean un caso docente una sola vez.
-6. **Supervisión humana:** el panel presenta el estudiante, tema, motivo, última evidencia, cantidad de intentos y fecha para que una persona decida cómo intervenir.
+La solución nace desde el contexto de Portoviejo y Manabí, pero su modelo puede adaptarse a otros territorios, materias y niveles educativos.
+
+## Solución construida
+
+KOSKA integra el siguiente flujo de aprendizaje:
+
+La inteligencia artificial apoya la personalización del aprendizaje, pero la decisión pedagógica final se mantiene en manos del docente.
+1. **Tutoría con IA:** el estudiante ingresa su nombre, selecciona o escribe un tema y puede añadir un texto de clase como contexto.
+2. **Explicación y comprobación:** el tutor entrega una explicación breve y una pregunta para verificar la comprensión.
+3. **Semáforo de comprensión:** la respuesta recibe un resultado verde, amarillo o rojo junto con una razón justificada.
+4. **Escalamiento docente:** tres resultados rojos consecutivos para un mismo estudiante y tema crean un caso visible en el panel docente.
+5. **Práctica integrada:** después de verificar la comprensión, el estudiante puede acceder a “Practicar lo aprendido (grupal)”, una actividad por turnos con preguntas, puntaje y retroalimentación.
+6. **Panel docente:** permite consultar los casos escalados y revisar la evidencia que originó la alerta.
 
 ## Arquitectura
 
+| Componente | Tecnología | Función |
+| --- | --- | --- |
+| Backend | Python + Flask | Explicaciones, evaluación, semáforo y escalamiento docente. |
+| IA | OpenAI API | Generación de explicaciones y evaluación de comprensión. |
+| Chat estudiantil | HTML, CSS y JavaScript | Interacción principal con el tutor. |
+| Actividad de práctica | HTML, CSS y JavaScript | Práctica colaborativa y retroalimentación. |
+| Panel docente | HTML, CSS y JavaScript | Visualización de casos escalados y pre-reportes. |
 ```text
 Navegador
-├── /       Tutor, evaluación y práctica grupal integrada
-├── /panel  Casos que requieren acompañamiento docente
-└── /assets HTML/CSS/JavaScript sin proceso de compilación
+├── /             Chat del tutor y actividad de práctica
+├── /panel        Panel de supervisión docente
+└── /assets       JavaScript y estilos de la interfaz
         │
         ▼
 Flask — Beckend/app.py
-├── API educativa y validación de entradas
-├── estado, historial e idempotencia en memoria
-├── OpenAI opcional para texto, evaluación, preguntas e imágenes
-└── simulación local automática y fallback por solicitud
+├── API educativa y validación de datos
+├── Historial de evaluaciones y escalamiento en memoria
+├── OpenAI API para explicación, evaluación, preguntas e imágenes
+└── Modo simulado cuando OpenAI no está disponible o falla
 ```
 
-Estructura del repositorio:
+## Herramientas de OpenAI
 
-```text
-Hackaton-2026/
-├── Beckend/
-│   └── app.py                 # Servidor Flask, API, OpenAI y modo simulado
-├── Fronted/
-│   ├── Chat/
-│   │   └── chat.html          # Tutor y actividad de práctica integrada
-│   ├── Panel/
-│   │   └── panel.html         # Supervisión docente
-│   ├── assets/
-│   │   ├── chat.js            # Flujo de tutoría, reintentos y práctica
-│   │   ├── panel.js           # Consulta segura y actualización del panel
-│   │   └── styles.css         # Diseño responsivo compartido
-│   └── app.ts                 # Archivo reservado; no se usa en ejecución
-└── README.md
-```
+- **OpenAI API con GPT:** utilizada para generar explicaciones educativas y evaluar la comprensión del estudiante.
+- **Codex:** utilizado durante el desarrollo y la mejora del prototipo.
+- **OpenAI API con GPT:** genera explicaciones y evalúa la comprensión del estudiante.
+- **Function calling:** genera preguntas de práctica con cuatro opciones, una respuesta correcta y explicación validada.
+- **OpenAI Images:** permite generar una imagen ilustrativa del concepto solicitado.
+- **Codex:** utilizado durante el desarrollo del prototipo.
 
-La escritura `Beckend` y `Fronted` forma parte de la estructura actual del repositorio; los comandos de este README usan esos nombres exactos.
+## Métrica de impacto propuesta
+Cuando no existe una clave de OpenAI o una llamada al servicio falla, el backend responde con contenido simulado para mantener el flujo de demostración. Esto no implica funcionamiento sin internet: el navegador necesita conectarse al servidor Flask.
 
+Koska permite medir el número de estudiantes que mejoran su semáforo de comprensión después de una práctica y el número de alertas rojas que reciben seguimiento docente. Esta evidencia permite observar si el sistema ayuda a identificar dificultades y promover intervenciones oportunas.
 ## API
 
-Todos los `POST` esperan `Content-Type: application/json`. Las respuestas generadas incluyen `modo: "real"` o `modo: "simulado"`; cuando ocurre un fallback también pueden incluir `aviso`.
+## Cómo ejecutar
+Todos los endpoints `POST` reciben datos JSON.
 
-| Método | Ruta | Entrada principal | Resultado |
-|---|---|---|---|
-| `GET` | `/api/estado` | — | Disponibilidad del servicio, modo activo y disponibilidad de OpenAI. |
-| `POST` | `/api/explicar` | `tema`, `texto` opcional | `explicacion`, `pregunta`, `modo` y posible `aviso`. |
-| `POST` | `/api/evaluar` | `tema`, `pregunta`, `respuesta`, `estudiante` opcional, `intento_id` opcional | `semaforo`, `razon`, `escalado`, `intentos`, `intento_id` y `modo`. |
-| `POST` | `/api/generar_pregunta` | `tema`, `contexto` y `dificultad` opcionales | Pregunta, cuatro opciones, índice de respuesta correcta y explicación. |
-| `POST` | `/api/generar_imagen` | `tema`, `texto` opcional | Imagen como URL o data URI, además de su tipo MIME. |
-| `GET` | `/api/escalados` | — | Lista de casos escalados con evidencia y trazabilidad. |
+1. Instalar las dependencias:
+| Método | Ruta | Función |
+| --- | --- | --- |
+| `GET` | `/api/estado` | Informa el estado del servicio y el modo activo. |
+| `POST` | `/api/explicar` | Genera una explicación y una pregunta de comprobación. |
+| `POST` | `/api/evaluar` | Evalúa una respuesta, asigna semáforo y registra el intento. |
+| `GET` | `/api/escalados` | Devuelve los casos que requieren acompañamiento docente. |
+| `POST` | `/api/generar_pregunta` | Genera una pregunta de práctica de opción múltiple. |
+| `POST` | `/api/generar_imagen` | Genera una imagen ilustrativa para un tema. |
 
-En modo real, `/api/generar_pregunta` usa **function calling real de OpenAI**: declara la herramienta `crear_pregunta_practica`, obliga al modelo a llamarla y valida sus argumentos contra la estructura esperada. No depende de pedir JSON libre y extraerlo manualmente del texto.
-
-`/api/generar_imagen` está disponible como capacidad complementaria; la interfaz principal actual no solicita imágenes automáticamente.
-
+   ```bash
+   pip install flask openai
+   ```
 ### Ejemplo de evaluación
 
+2. Configurar la clave de OpenAI:
 ```json
 {
   "tema": "fracciones",
-  "pregunta": "Si una torta se divide en 4 partes iguales, ¿qué representa 1/4?",
-  "respuesta": "Representa una de las cuatro partes iguales de la torta.",
+  "pregunta": "Si una torta se divide en cuatro partes iguales, ¿qué representa 1/4?",
+  "respuesta": "Una de las cuatro partes iguales.",
   "estudiante": "Ana",
   "intento_id": "demo-ana-fracciones-001"
 }
 ```
 
-El cliente debe reutilizar el mismo `intento_id` cuando reenvía una evaluación por timeout o reconexión. Así, una misma respuesta no aumenta dos veces el historial ni activa un escalado incorrecto.
+   ```bash
+   set OPENAI_API_KEY=tu_clave_aqui
+   ```
+El campo `intento_id` permite reenviar una evaluación interrumpida sin duplicar su registro ni activar un escalamiento incorrecto.
 
-## Modos de ejecución y tolerancia a fallos
+3. Ejecutar el backend:
+## Estructura del repositorio
 
-| Situación | Comportamiento |
-|---|---|
-| No existe `OPENAI_API_KEY` | Inicia directamente en modo simulado. |
-| La clave y OpenAI están disponibles | Usa los modelos configurados y responde en modo real. |
-| OpenAI falla o supera el tiempo de espera | Completa esa solicitud con la respuesta simulada e informa el fallback. |
-| El navegador pierde conexión con Flask | Conserva el estado visible, muestra el problema y permite reintentar. |
-
-El modo simulado permite demostrar explicación, evaluación, semáforos, práctica, imágenes ilustrativas y escalado sin gastar créditos. No significa que la aplicación web funcione sin poder alcanzar el servidor Flask: esa separación se mantiene como una limitación del prototipo.
+   ```bash
+   cd Beckend
+   python app.py
+   ```
+```text
+Hackaton-2026/
+├── Beckend/
+│   ├── app.py                    # Servidor Flask y API educativa
+│   └── requirements.txt           # Dependencias del backend
+├── Fronted/
+│   ├── Chat/
+│   │   └── chat.html              # Interfaz del tutor estudiantil
+│   ├── Panel/
+│   │   └── panel.html             # Panel de supervisión docente
+│   ├── assets/
+│   │   ├── chat.js                # Lógica del chat y práctica
+│   │   ├── panel.js               # Lógica del panel docente
+│   │   └── styles.css             # Estilos compartidos
+│   ├── juego/
+│   │   └── unirse.html            # Vista para unirse a la práctica
+│   └── app.ts
+├── .gitignore
+├── eREADME.md
+├── juego.html                     # Actividad de práctica
+├── README.md
+└── requirements.txt
+```
 
 ## Requisitos
 
-- Python 3.10 o posterior recomendado.
-- Un navegador moderno.
-- Paquetes de Python: `Flask` y `openai`.
-- Clave de OpenAI solo si se desea probar el modo real.
+- Python 3.10 o superior recomendado.
+- Navegador moderno.
+- Paquetes Python: `flask` y `openai`.
+- Clave `OPENAI_API_KEY` solo para utilizar las funciones reales de OpenAI.
 
-No se requiere Node.js, base de datos, autenticación ni proceso de compilación para ejecutar la aplicación.
+No se requiere Node.js, autenticación ni una base de datos externa para ejecutar el prototipo.
 
 ## Instalación y ejecución
 
 ### Windows PowerShell
 
 ```powershell
-cd C:\ruta\al\repositorio\Hackaton-2026
+git clone https://github.com/Fabricioanchundia/Hackaton-2026.git
+cd Hackaton-2026
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-python -m pip install Flask openai
-python Beckend/app.py
+python -m pip install -r Beckend\requirements.txt
+python Beckend\app.py
 ```
 
 ### macOS o Linux
 
 ```bash
-cd /ruta/al/repositorio/Hackaton-2026
+git clone https://github.com/Fabricioanchundia/Hackaton-2026.git
+cd Hackaton-2026
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install Flask openai
+python -m pip install -r Beckend/requirements.txt
 python Beckend/app.py
 ```
 
 Con el servidor activo, abre:
 
-- Tutor: [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
-- Panel docente: [http://127.0.0.1:5000/panel](http://127.0.0.1:5000/panel)
-- Estado de la API: [http://127.0.0.1:5000/api/estado](http://127.0.0.1:5000/api/estado)
-
-No abras `chat.html` directamente ni levantes el frontend en otro puerto: las vistas y la API están diseñadas para compartir el mismo origen de Flask.
+- Tutor: `http://127.0.0.1:5000/`
+- Panel docente: `http://127.0.0.1:5000/panel`
+- Estado de la API: `http://127.0.0.1:5000/api/estado`
 
 ## Configuración opcional de OpenAI
 
-Las tres variables son opcionales. Si se omite `OPENAI_API_KEY`, ManabIA inicia en modo simulado.
+Para utilizar el modo real, configura la clave antes de iniciar Flask:
 
-| Variable | Uso | Valor predeterminado |
-|---|---|---|
-| `OPENAI_API_KEY` | Habilita las llamadas reales a OpenAI. | Sin valor; activa simulación. |
-| `OPENAI_MODEL` | Modelo de texto para explicación, evaluación y preguntas. | `gpt-4o-mini` |
-| `OPENAI_IMAGE_MODEL` | Modelo para ilustraciones educativas. | `gpt-image-1-mini` |
-
-Windows PowerShell:
-
+4. Abrir en el navegador las interfaces ubicadas en `Fronted/Chat`, `Fronted/Juego` y `Fronted/Panel`.
 ```powershell
-$env:OPENAI_API_KEY = "tu_clave"
-$env:OPENAI_MODEL = "gpt-4o-mini"
-$env:OPENAI_IMAGE_MODEL = "gpt-image-1-mini"
-python Beckend/app.py
+$env:OPENAI_API_KEY = "tu_clave_de_openai"
+python Beckend\app.py
 ```
 
-macOS o Linux:
+También se pueden configurar los modelos mediante `OPENAI_MODEL` y `OPENAI_IMAGE_MODEL`. Nunca se debe publicar una clave real en el repositorio.
 
-```bash
-export OPENAI_API_KEY="tu_clave"
-export OPENAI_MODEL="gpt-4o-mini"
-export OPENAI_IMAGE_MODEL="gpt-image-1-mini"
-python Beckend/app.py
-```
+## Supervisión humana y uso responsable
 
-Las variables se leen al iniciar el proceso. Reinicia Flask después de cambiarlas y nunca publiques una clave real en el repositorio.
+La IA entrega apoyo formativo, pero **no asigna calificaciones oficiales, no sanciona estudiantes ni reemplaza la decisión docente**. Los casos escalados deben ser revisados por una persona antes de decidir cualquier acción pedagógica.
 
-## Guion de prueba manual
+El prototipo trabaja con información en memoria. No se deben enviar datos sensibles de estudiantes sin autorización, políticas de privacidad y medidas de protección adecuadas.
 
-1. Arranca el servidor sin `OPENAI_API_KEY` y confirma en `/api/estado` que el modo sea `simulado`.
-2. Abre `/`, escribe **Ana**, selecciona **Fracciones** y pulsa **Empezar a aprender**.
-3. Responde: “1/4 representa una de las cuatro partes iguales de la torta”. Debe aparecer un semáforo verde con una razón.
-4. Pulsa **Practicar lo aprendido (grupal)** y completa los cuatro turnos de los equipos Ceibo y Colibrí.
-5. Inicia otro tema con un estudiante de prueba y responde “No sé” tres veces consecutivas. El tercer resultado debe informar el escalado.
-6. Abre `/panel` y comprueba que aparezcan el estudiante, tema, motivo, última respuesta, intentos y fecha.
-7. Detén temporalmente Flask o simula una conexión lenta para comprobar los mensajes de error y los botones de reintento.
-8. Si dispones de una clave, reinicia con `OPENAI_API_KEY` y verifica que el indicador cambie a modo real. Una falla de OpenAI debe devolver la experiencia al modo simulado sin cortar el flujo.
+## Métrica de impacto propuesta
 
-Para una comprobación rápida desde PowerShell:
+La evidencia de impacto de KOSKA se puede medir mediante:
 
-```powershell
-Invoke-RestMethod http://127.0.0.1:5000/api/estado
-```
+- Porcentaje de estudiantes que mejoran su semáforo de comprensión después de practicar.
+- Número de alertas rojas detectadas y revisadas por un docente.
+- Cantidad de casos escalados por tema, para orientar refuerzos educativos.
+- Tiempo entre la detección de una dificultad y la intervención docente.
 
-O desde macOS/Linux:
+Estas métricas muestran si la solución ayuda a identificar dificultades a tiempo y favorece un acompañamiento educativo más oportuno.
 
-```bash
-curl http://127.0.0.1:5000/api/estado
-```
+## Limitaciones actuales
 
-## Supervisión humana
+- El historial y los casos escalados se almacenan en memoria; se pierden al reiniciar Flask.
+- No incluye autenticación, base de datos externa ni separación de roles para producción.
+- La aplicación requiere comunicación entre el navegador y el servidor Flask.
+- Las respuestas y evaluaciones generadas por IA pueden equivocarse y deben revisarse con criterio docente.
+- La actividad de práctica no es un mecanismo de evaluación segura o calificación oficial.
 
-La supervisión docente no es decorativa: forma parte del flujo central. El backend agrupa el historial por estudiante y tema; cuando detecta tres rojos consecutivos, registra un caso con su motivo y evidencia. El panel permite que el docente priorice ese caso y decida el apoyo adecuado.
+## Escalabilidad
 
-La IA entrega retroalimentación formativa, pero **no asigna una calificación oficial, no sanciona y no toma la decisión pedagógica final**. El panel actual es de consulta; la intervención y el cierre del caso ocurren fuera del prototipo y quedan a cargo del docente.
-
-## Limitaciones del prototipo
-
-- El historial, la idempotencia y los casos escalados viven en memoria; se pierden al reiniciar Flask y no se comparten entre varios procesos.
-- No existe autenticación ni separación de roles. El tutor y el panel deben usarse solo con datos de demostración en un entorno controlado.
-- No hay base de datos externa, sincronización offline ni instalación como PWA.
-- El fallback cubre la indisponibilidad de OpenAI, no una pérdida total de conexión entre el navegador y Flask.
-- En modo real, los textos enviados pueden procesarse mediante OpenAI; no deben usarse datos sensibles de estudiantes sin las autorizaciones y políticas correspondientes.
-- La evaluación y el contenido generados por IA pueden equivocarse y requieren criterio docente.
-- La actividad de práctica recibe el índice correcto en el navegador para calcular el marcador; no es un mecanismo de examen seguro.
-- Es una aplicación de demostración para el buildathon, no un servicio endurecido para producción.
+Aunque nace para el contexto educativo de Portoviejo y Manabí, Koska puede adaptarse a otros territorios cambiando contenidos, ejemplos locales y necesidades curriculares. Su modelo de tutoría personalizada con supervisión humana puede aplicarse a distintos niveles y materias.
+KOSKA puede escalar a otros territorios adaptando contenidos, ejemplos y currículos locales. Su enfoque combina tutoría personalizada, evidencia de comprensión y supervisión humana, por lo que puede aplicarse a distintas materias, grados y contextos educativos.
 
 ## Equipo
 
 - **Fabricio:** backend y agente educativo.
-- **Jhon:** frontend del tutor y chat.
-- **Kalil Mera:** frontend de actividades, evidencia y pitch.
+- **Jhon:** frontend del chat.
+- **Kalil Mera:** actividad de práctica, evidencia y pitch.
 
 ---
 
-**ManabIA — hecho en Manabí para aprender sin barreras.**
+**KOSKA — tecnología educativa con IA, acompañada por docentes.**
