@@ -272,10 +272,15 @@
   }
 
   function getTopic() {
-    if (elements.topicSelect.value === "otro") {
-      return elements.customTopic.value.trim();
+    var categoria = elements.topicSelect.options[elements.topicSelect.selectedIndex].text;
+    var temaEscrito = elements.customTopic.value.trim();
+    if (!temaEscrito) {
+      return "";
     }
-    return elements.topicSelect.value.trim();
+    if (elements.topicSelect.value === "otro") {
+      return temaEscrito;
+    }
+    return categoria + ": " + temaEscrito;
   }
 
   function setTopicControlsBusy(isBusy) {
@@ -466,7 +471,7 @@
         setSteps("practice");
         elements.studentAnswer.placeholder = "Comprensión verificada · práctica disponible";
         actions.push({
-          label: "🎯 Practicar lo aprendido (grupal)",
+          label: "Practicar lo aprendido (grupal)",
           className: "button--practice",
           onClick: openPractice
         });
@@ -764,13 +769,20 @@
     }
   }
 
+  var landingScreen = document.getElementById("landingScreen");
+  var pageShell = document.getElementById("pageShell");
+  var openChatButton = document.getElementById("openChatButton");
+
+  if (openChatButton) {
+    openChatButton.addEventListener("click", function () {
+      landingScreen.hidden = true;
+      pageShell.hidden = false;
+      elements.studentName.focus();
+    });
+  }
+
   elements.topicSelect.addEventListener("change", function () {
-    var isCustom = elements.topicSelect.value === "otro";
-    elements.customTopicField.hidden = !isCustom;
-    elements.customTopic.required = isCustom;
-    if (isCustom) {
-      elements.customTopic.focus();
-    }
+    elements.customTopic.focus();
   });
 
   elements.topicForm.addEventListener("submit", function (event) {

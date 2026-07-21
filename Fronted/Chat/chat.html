@@ -6,6 +6,8 @@
   <meta name="theme-color" content="#12372a">
   <meta name="description" content="Kosko, tutor educativo con inteligencia artificial y supervisión docente para estudiantes de Manabí.">
   <title>Kosko | Tutor educativo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/styles.css">
   <script src="/assets/chat.js" defer></script>
 </head>
@@ -32,7 +34,22 @@
     </div>
   </header>
 
-  <main class="page-shell">
+  <main>
+    <section id="landingScreen" class="landing-screen" aria-labelledby="landingTitle">
+      <div class="landing-screen__inner">
+        <p class="eyebrow">Tutor educativo con IA</p>
+        <h1 id="landingTitle">Cuestiona qué aprender después.</h1>
+        <p class="landing-screen__lead">
+          Kosko es tu compañero de aprendizaje: explica cualquier tema, comprueba que
+          quedó claro y practica contigo, con un docente siempre presente.
+        </p>
+        <button id="openChatButton" class="button button--primary landing-screen__cta" type="button">
+          Abrir chat con Kosko →
+        </button>
+      </div>
+    </section>
+
+    <div id="pageShell" class="page-shell" hidden>
     <aside class="welcome-card" aria-labelledby="welcomeTitle">
       <p class="eyebrow">Tutor educativo con IA</p>
       <h1 id="welcomeTitle">Tu forma de aprender también cuenta.</h1>
@@ -94,18 +111,19 @@
         </div>
 
         <div class="field field--compact">
-          <label for="topicSelect">¿Qué quieres aprender?</label>
+          <label for="topicSelect">Categoría</label>
           <select id="topicSelect" name="topicSelect">
-            <option value="fracciones">Fracciones</option>
-            <option value="fotosíntesis">Fotosíntesis</option>
-            <option value="verbos en pasado">Verbos en pasado</option>
-            <option value="otro">Otro tema…</option>
+            <option value="matemática">Matemática</option>
+            <option value="biología">Biología</option>
+            <option value="física">Física</option>
+            <option value="lenguaje">Lenguaje</option>
+            <option value="otro">Otra categoría…</option>
           </select>
         </div>
 
-        <div id="customTopicField" class="field field--full" hidden>
-          <label for="customTopic">Escribe el tema</label>
-          <input id="customTopic" name="customTopic" type="text" maxlength="100" placeholder="Ej. El ciclo del agua">
+        <div id="customTopicField" class="field field--full">
+          <label for="customTopic">¿Qué tema quieres aprender?</label>
+          <input id="customTopic" name="customTopic" type="text" maxlength="100" placeholder="Ej. Fracciones, el ciclo del agua, verbos en pasado..." required>
         </div>
 
         <details class="source-details field--full">
@@ -125,7 +143,7 @@
 
       <div id="chat" class="chat" role="log" aria-live="polite" aria-relevant="additions">
         <article class="message message--agent">
-          <span class="message__avatar" aria-hidden="true">M</span>
+          <span class="message__avatar" aria-hidden="true">K</span>
           <div class="message__bubble">
             <span class="message__author">Kosko</span>
             <p>¡Hola! Elige un tema y te lo explicaré paso a paso. Luego comprobaremos juntos qué entendiste.</p>
@@ -185,6 +203,7 @@
         </div>
       </section>
     </section>
+    </div>
   </main>
 
   <footer class="site-footer">
