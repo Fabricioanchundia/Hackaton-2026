@@ -1,4 +1,3 @@
-# Koska
 # KOSKA
 
 Koska es un tutor educativo con inteligencia artificial creado para el Buildathon Portoviejo. Ayuda a estudiantes a comprender contenidos escolares mediante explicaciones sencillas, evaluación de comprensión y práctica guiada; además, permite que el docente detecte oportunamente casos que requieren acompañamiento.
