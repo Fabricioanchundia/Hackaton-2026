@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>TutorIA Rural - Chat Estudiante</title>
+<style>
+  body {
+    font-family: -apple-system, Arial, sans-serif;
+    max-width: 600px;
+    margin: 30px auto;
+    background: #f5f5f5;
+    padding: 20px;
+  }
+  h1 { color: #2d5f3f; }
+  #chat {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    min-height: 300px;
+    max-height: 450px;
+    overflow-y: auto;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  }
+  .msg { margin-bottom: 12px; padding: 8px 12px; border-radius: 8px; }
+  .agente { background: #e8f4ea; }
+  .estudiante { background: #e8f0f4; text-align: right; }
+  .semaforo { font-size: 22px; margin-left: 6px; }
+  .controls { margin-top: 15px; display: flex; gap: 8px; }
+  input, button, select {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+  input { flex: 1; }
+  button {
+    background: #2d5f3f;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  button:hover { background: #244d33; }
+  #estado { font-size: 13px; color: #666; margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<h1>🎓 TutorIA Rural</h1>
+<p>Elige un tema para empezar a aprender:</p>
+
+<select id="tema">
+  <option value="fracciones">Fracciones</option>
+  <option value="fotosintesis">Fotosíntesis</option>
+  <option value="verbos">Verbos en pasado</option>
+</select>
+<button onclick="pedirExplicacion()">Empezar tema</button>
+
+<div id="chat"></div>
+
+<div class="controls">
+  <input id="respuesta" placeholder="Escribe tu respuesta aquí..." onkeypress="if(event.key==='Enter') enviarRespuesta()">
+  <button onclick="enviarRespuesta()">Enviar</button>
+</div>
+
+<div id="estado"></div>
+
+<script>
+const API = ""; // mismo origen (Flask sirve todo junto)
+let temaActual = "";
+let ultimaPregunta = "";
+
+function agregarMensaje(texto, tipo, semaforo) {
+  const chat = document.getElementById("chat");
+  const div = document.createElement("div");
+  div.className = "msg " + tipo;
+  let extra = "";
+  if (semaforo) {
+    const emoji = semaforo === "rojo" ? "🔴" : semaforo === "amarillo" ? "🟡" : "🟢";
+    extra = `<span class="semaforo">${emoji}</span>`;
+  }
+  div.innerHTML = texto + extra;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+async function pedirExplicacion() {
+  temaActual = document.getElementById("tema").value;
+  document.getElementById("chat").innerHTML = "";
+  agregarMensaje("⏳ Explicando...", "agente");
+
+  const res = await fetch(API + "/api/explicar", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({tema: temaActual})
+  });
+  const data = await res.json();
+
+  document.getElementById("chat").innerHTML = "";
+  agregarMensaje("🤖 " + data.explicacion, "agente");
+  ultimaPregunta = data.explicacion; // usamos la explicación como contexto de la pregunta
+}
+
+async function enviarRespuesta() {
+  const input = document.getElementById("respuesta");
+  const respuesta = input.value.trim();
+  if (!respuesta || !temaActual) return;
+
+  agregarMensaje("🧑 " + respuesta, "estudiante");
+  input.value = "";
+
+  document.getElementById("estado").innerText = "Evaluando...";
+
+  const res = await fetch(API + "/api/evaluar", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      tema: temaActual,
+      pregunta: ultimaPregunta,
+      respuesta: respuesta,
+      estudiante: "Estudiante Demo"
+    })
+  });
+  const data = await res.json();
+
+  agregarMensaje(data.razon, "agente", data.semaforo);
+  document.getElementById("estado").innerText = "";
+
+  if (data.escalado) {
+    agregarMensaje("⚠️ Este caso fue escalado al panel del docente.", "agente");
+  }
+}
+</script>
+
+</body>
+</html>
