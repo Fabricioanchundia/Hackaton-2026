@@ -1,6 +1,6 @@
-"""Backend de ManabIA.
+"""Backend de Kosko.
 
-ManabIA es un tutor educativo con IA para contextos con conectividad
+Kosko es un tutor educativo con IA para contextos con conectividad
 intermitente. El servidor usa OpenAI cuando la clave y el SDK están
 disponibles y degrada automáticamente a respuestas simuladas cuando no lo
 están o cuando una llamada externa falla.
@@ -19,6 +19,13 @@ import unicodedata
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
+
+# Carga la API key desde un archivo .env si existe (nunca se sube a GitHub)
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 from flask import Flask, jsonify, request, send_from_directory
 
@@ -233,7 +240,7 @@ def _explicacion_real(tema, texto):
             {
                 "role": "system",
                 "content": (
-                    "Eres ManabIA, un tutor educativo para estudiantes de Manabí, "
+                    "Eres Kosko, un tutor educativo para estudiantes de Manabí, "
                     "Ecuador. Explica con lenguaje sencillo, respetuoso y cercano, "
                     "sin inventar datos. Devuelve una explicación breve y una sola "
                     "pregunta clara para verificar comprensión."
@@ -353,7 +360,7 @@ def _evaluacion_real(tema, pregunta, respuesta):
             {
                 "role": "system",
                 "content": (
-                    "Eres el evaluador pedagógico de ManabIA. Evalúa comprensión, "
+                    "Eres el evaluador pedagógico de Kosko. Evalúa comprensión, "
                     "no estilo ni ortografía. Usa rojo si aún no comprende, amarillo "
                     "si comprende parcialmente y verde si demuestra comprensión. La "
                     "razón debe ser concreta, respetuosa y trazable a la respuesta."
@@ -596,7 +603,7 @@ def _pregunta_real(tema, contexto, dificultad):
         "type": "function",
         "function": {
             "name": "crear_pregunta_practica",
-            "description": "Crea una pregunta educativa de opción múltiple para ManabIA.",
+            "description": "Crea una pregunta educativa de opción múltiple para Kosko.",
             "strict": True,
             "parameters": {
                 "type": "object",
@@ -631,7 +638,7 @@ def _pregunta_real(tema, contexto, dificultad):
             {
                 "role": "system",
                 "content": (
-                    "Eres ManabIA. Genera una pregunta de práctica clara, correcta "
+                    "Eres Kosko. Genera una pregunta de práctica clara, correcta "
                     "y apropiada para estudiantes. Debe tener exactamente cuatro "
                     "opciones distintas, una sola respuesta correcta y una explicación "
                     "breve. Usa obligatoriamente la herramienta disponible."
@@ -676,7 +683,7 @@ def _svg_simulado(tema):
   <path d="M512 235l245 118-245 118-245-118z" fill="#f4b942"/>
   <path d="M711 371v133" stroke="#f4b942" stroke-width="18" stroke-linecap="round"/>
   <circle cx="711" cy="523" r="25" fill="#f4b942"/>
-  <text x="512" y="735" text-anchor="middle" font-family="Arial, sans-serif" font-size="38" font-weight="700" fill="#2d6a4f">ManabIA</text>
+  <text x="512" y="735" text-anchor="middle" font-family="Arial, sans-serif" font-size="38" font-weight="700" fill="#2d6a4f">Kosko</text>
   <text x="512" y="805" text-anchor="middle" font-family="Arial, sans-serif" font-size="48" font-weight="700" fill="#173f35">{titulo}</text>
   <text x="512" y="870" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" fill="#315b52">Ilustración educativa · modo simulado</text>
 </svg>"""
@@ -729,7 +736,7 @@ def assets(nombre):
 def estado():
     modo = "real" if OPENAI_CLIENT is not None else "simulado"
     payload = {
-        "nombre": "ManabIA",
+        "nombre": "Kosko",
         "estado": "disponible",
         "modo": modo,
         "openai_disponible": OPENAI_CLIENT is not None,

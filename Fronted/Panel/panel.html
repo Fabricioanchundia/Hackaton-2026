@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#12372a">
-  <meta name="description" content="Panel de supervisión docente de ManabIA.">
-  <title>ManabIA | Panel docente</title>
+  <meta name="description" content="Panel de supervisión docente de Kosko.">
+  <title>Kosko | Panel docente</title>
   <link rel="stylesheet" href="/assets/styles.css">
   <script src="/assets/panel.js" defer></script>
 </head>
@@ -13,10 +13,10 @@
   <a class="skip-link" href="#casos">Saltar a los casos</a>
 
   <header class="topbar">
-    <a class="brand" href="/" aria-label="ManabIA, inicio">
-      <span class="brand__mark" aria-hidden="true">M</span>
+    <a class="brand" href="/" aria-label="Kosko, inicio">
+      <span class="brand__mark" aria-hidden="true">K</span>
       <span>
-        <strong>ManabIA</strong>
+        <strong>Kosko</strong>
         <small>Supervisión docente</small>
       </span>
     </a>
@@ -33,11 +33,28 @@
   </header>
 
   <main class="panel-shell">
+    <section id="accessGate" class="access-gate" aria-labelledby="accessGateTitle">
+      <div class="access-gate__card">
+        <span class="access-gate__icon" aria-hidden="true">🔒</span>
+        <h1 id="accessGateTitle">Acceso solo para docentes</h1>
+        <p>Esta sección muestra información de estudiantes. Ingresa la clave que te compartió el equipo organizador.</p>
+        <form id="accessGateForm" class="access-gate__form">
+          <label for="accessGateInput" class="sr-only">Clave de acceso docente</label>
+          <input id="accessGateInput" type="password" inputmode="text" autocomplete="off"
+                 placeholder="Clave de acceso" required aria-describedby="accessGateError">
+          <button type="submit" class="button button--primary">Entrar al panel</button>
+        </form>
+        <p id="accessGateError" class="access-gate__error" role="alert" hidden>Clave incorrecta. Inténtalo de nuevo.</p>
+        <a class="access-gate__back" href="/">← Volver al tutor</a>
+      </div>
+    </section>
+
+    <div id="panelContent" hidden>
     <section class="panel-hero" aria-labelledby="panelTitle">
       <div>
         <p class="eyebrow">Humano al centro</p>
         <h1 id="panelTitle">Casos que necesitan acompañamiento</h1>
-        <p>ManabIA identifica patrones; el docente conserva la decisión y el acompañamiento final.</p>
+        <p>Kosko identifica patrones; el docente conserva la decisión y el acompañamiento final.</p>
       </div>
       <div class="panel-stat" aria-label="Cantidad de casos pendientes">
         <strong id="caseCount">—</strong>
@@ -89,10 +106,11 @@
         <p>Cuando un estudiante necesite ayuda directa, aparecerá aquí con el motivo del escalado.</p>
       </div>
     </section>
+    </div>
   </main>
 
   <footer class="site-footer">
-    <span>ManabIA · IA con supervisión humana</span>
+    <span>Kosko · IA con supervisión humana</span>
     <a href="/">Volver al tutor</a>
   </footer>
 </body>

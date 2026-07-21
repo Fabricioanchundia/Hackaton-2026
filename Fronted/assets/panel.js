@@ -1,6 +1,43 @@
 (function () {
   "use strict";
 
+  // Clave de acceso simple para que el estudiante no entre directo al panel
+  // docente. No es seguridad real (es una demo de hackathon), es una barrera
+  // de intención: solo quien tiene la clave del equipo pasa de esta pantalla.
+  var DOCENTE_ACCESS_CODE = "kosko2026";
+  var SESSION_KEY = "kosko_docente_autorizado";
+
+  var gate = document.getElementById("accessGate");
+  var gateForm = document.getElementById("accessGateForm");
+  var gateInput = document.getElementById("accessGateInput");
+  var gateError = document.getElementById("accessGateError");
+  var panelContent = document.getElementById("panelContent");
+
+  function concederAcceso() {
+    gate.hidden = true;
+    panelContent.hidden = false;
+    window.sessionStorage.setItem(SESSION_KEY, "1");
+    init();
+  }
+
+  if (window.sessionStorage.getItem(SESSION_KEY) === "1") {
+    gate.hidden = true;
+    panelContent.hidden = false;
+  } else {
+    gateForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      var valor = (gateInput.value || "").trim().toLowerCase();
+      if (valor === DOCENTE_ACCESS_CODE) {
+        gateError.hidden = true;
+        concederAcceso();
+      } else {
+        gateError.hidden = false;
+        gateInput.focus();
+        gateInput.select();
+      }
+    });
+  }
+
   var BASE_REFRESH_MS = 30000;
   var MAX_REFRESH_MS = 120000;
   var REQUEST_TIMEOUT_MS = 12000;
@@ -63,7 +100,7 @@
       if (error instanceof ApiError) {
         throw error;
       }
-      throw new ApiError("No pudimos conectar con ManabIA.", "network");
+      throw new ApiError("No pudimos conectar con Kosko.", "network");
     } finally {
       window.clearTimeout(timeout);
     }
@@ -253,6 +290,12 @@
     loadCases(true);
   });
 
-  checkMode();
-  loadCases(false);
+  function init() {
+    checkMode();
+    loadCases(false);
+  }
+
+  if (window.sessionStorage.getItem(SESSION_KEY) === "1") {
+    init();
+  }
 })();

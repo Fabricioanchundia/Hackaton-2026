@@ -1,18 +1,18 @@
 :root {
   color-scheme: light;
-  --forest-950: #0b241b;
-  --forest-900: #12372a;
-  --forest-800: #1a4a39;
-  --forest-700: #24634b;
-  --forest-100: #dff1e8;
-  --forest-50: #eff8f4;
+  --forest-950: #0b1f33;
+  --forest-900: #123a5e;
+  --forest-800: #1d5c8a;
+  --forest-700: #2e86c1;
+  --forest-100: #dceefa;
+  --forest-50: #f0f8ff;
   --sand-100: #fff4dc;
   --sand-50: #fffaf0;
   --sun: #f2a93b;
   --sun-dark: #bb6b0c;
-  --ink: #17221d;
-  --muted: #64726b;
-  --line: #dce6e0;
+  --ink: #16232b;
+  --muted: #56606b;
+  --line: #d7e3ee;
   --surface: #ffffff;
   --danger: #b42318;
   --danger-soft: #fff0ee;
@@ -20,8 +20,8 @@
   --warning-soft: #fff7d6;
   --success: #117344;
   --success-soft: #e4f6ec;
-  --shadow-lg: 0 24px 70px rgba(22, 54, 41, 0.13);
-  --shadow-sm: 0 8px 24px rgba(22, 54, 41, 0.08);
+  --shadow-lg: 0 24px 70px rgba(11, 31, 51, 0.13);
+  --shadow-sm: 0 8px 24px rgba(11, 31, 51, 0.08);
   --radius-lg: 28px;
   --radius-md: 18px;
   --radius-sm: 12px;
@@ -44,7 +44,7 @@ body {
   color: var(--ink);
   background:
     radial-gradient(circle at 8% 12%, rgba(242, 169, 59, 0.16), transparent 24rem),
-    radial-gradient(circle at 93% 25%, rgba(44, 137, 99, 0.13), transparent 28rem),
+    radial-gradient(circle at 93% 25%, rgba(29, 92, 138, 0.13), transparent 28rem),
     #f7faf8;
   font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.5;
@@ -1466,4 +1466,77 @@ tbody tr:hover {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Pantalla de acceso docente (protege el panel de estudiantes curiosos) */
+.access-gate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 2rem 1rem;
+}
+
+.access-gate__card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 2.5rem 2rem;
+  max-width: 26rem;
+  width: 100%;
+  text-align: center;
+}
+
+.access-gate__icon {
+  font-size: 2.25rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.access-gate__card h1 {
+  font-size: 1.35rem;
+  margin: 0 0 0.5rem;
+  color: var(--forest-900);
+}
+
+.access-gate__card p {
+  color: var(--muted);
+  margin: 0 0 1.25rem;
+  font-size: 0.95rem;
+}
+
+.access-gate__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.access-gate__form input {
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  font-size: 1rem;
+}
+
+.access-gate__form input:focus-visible {
+  outline: 3px solid rgba(242, 169, 59, 0.75);
+  outline-offset: 2px;
+}
+
+.access-gate__error {
+  color: var(--danger);
+  font-size: 0.875rem;
+  margin: 0.75rem 0 0;
+}
+
+.access-gate__back {
+  display: inline-block;
+  margin-top: 1.25rem;
+  color: var(--forest-800);
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.access-gate__back:hover {
+  text-decoration: underline;
 }

@@ -128,7 +128,7 @@
       if (error instanceof ApiError) {
         throw error;
       }
-      throw new ApiError("No pudimos conectar con ManabIA. Revisa la conexión.", "network");
+      throw new ApiError("No pudimos conectar con Kosko. Revisa la conexión.", "network");
     } finally {
       window.clearTimeout(timeout);
     }
@@ -196,14 +196,14 @@
     var avatar = document.createElement("span");
     avatar.className = "message__avatar";
     avatar.setAttribute("aria-hidden", "true");
-    avatar.textContent = isStudent ? (state.student.charAt(0).toUpperCase() || "E") : "M";
+    avatar.textContent = isStudent ? (state.student.charAt(0).toUpperCase() || "E") : "K";
 
     var bubble = document.createElement("div");
     bubble.className = "message__bubble";
 
     var author = document.createElement("span");
     author.className = "message__author";
-    author.textContent = config.author || (isStudent ? state.student || "Estudiante" : "ManabIA");
+    author.textContent = config.author || (isStudent ? state.student || "Estudiante" : "Kosko");
     bubble.appendChild(author);
 
     var paragraph = document.createElement("p");
@@ -248,13 +248,13 @@
     var avatar = document.createElement("span");
     avatar.className = "message__avatar";
     avatar.setAttribute("aria-hidden", "true");
-    avatar.textContent = "M";
+    avatar.textContent = "K";
 
     var bubble = document.createElement("div");
     bubble.className = "message__bubble";
     var author = document.createElement("span");
     author.className = "message__author";
-    author.textContent = "ManabIA está pensando";
+    author.textContent = "Kosko está pensando";
     var dots = document.createElement("div");
     dots.className = "typing-dots";
     dots.setAttribute("aria-hidden", "true");
@@ -349,7 +349,7 @@
     setAnswerEnabled(false);
     state.loadingExplanation = true;
 
-    var loadingMessage = addLoadingMessage("ManabIA está preparando la explicación");
+    var loadingMessage = addLoadingMessage("Kosko está preparando la explicación");
 
     try {
       var data = await requestJSON("/api/explicar", {
@@ -438,7 +438,7 @@
     state.evaluating = true;
     setAnswerEnabled(false);
     setStatus(isRetry ? "Reintentando la misma evaluación…" : "Revisando tu comprensión…");
-    var loadingMessage = addLoadingMessage("ManabIA está evaluando la respuesta");
+    var loadingMessage = addLoadingMessage("Kosko está evaluando la respuesta");
 
     try {
       var data = await requestJSON("/api/evaluar", {
@@ -747,7 +747,7 @@
         elements.studentName.value = storedName.slice(0, 40);
       }
     } catch (storageError) {
-      // No se requiere almacenamiento local para usar ManabIA.
+      // No se requiere almacenamiento local para usar Kosko.
     }
   }
 
@@ -792,6 +792,20 @@
   });
   window.addEventListener("online", checkServiceMode);
 
+  function showWelcomeMessage() {
+    if (elements.chat.children.length > 0) {
+      return;
+    }
+    addMessage({
+      role: "agent",
+      text:
+        "Hola, soy Kosko. Cuéntame tu nombre y qué tema quieres aprender hoy, " +
+        "y te acompaño paso a paso: te explico, comprobamos que quedó claro y " +
+        "practicamos juntos.",
+    });
+  }
+
   restoreStudentName();
   checkServiceMode();
+  showWelcomeMessage();
 })();
